@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taiwan - Online Banking</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- PIN Authentication Screen -->
+    <div id="pinScreen" class="pin-screen">
+        <div class="pin-container">
+            <div class="bank-logo">
+                <i class="fas fa-university"></i>
+                <h1>台灣網上銀行</h1>
+            </div>
+            <h2>密碼</h2>
+            <p class="pin-subtitle">請輸入六位數銷以繼續</p>
+            
+            <div class="pin-display">
+                <div class="pin-dot" id="dot1"></div>
+                <div class="pin-dot" id="dot2"></div>
+                <div class="pin-dot" id="dot3"></div>
+                <div class="pin-dot" id="dot4"></div>
+                <div class="pin-dot" id="dot5"></div>
+                <div class="pin-dot" id="dot6"></div>
+            </div>
+            
+            <div class="error-message" id="errorMessage"></div>
+            
+            <div class="pin-keypad">
+                <button class="key-btn" data-key="1">1</button>
+                <button class="key-btn" data-key="2">2</button>
+                <button class="key-btn" data-key="3">3</button>
+                <button class="key-btn" data-key="4">4</button>
+                <button class="key-btn" data-key="5">5</button>
+                <button class="key-btn" data-key="6">6</button>
+                <button class="key-btn" data-key="7">7</button>
+                <button class="key-btn" data-key="8">8</button>
+                <button class="key-btn" data-key="9">9</button>
+                <button class="key-btn key-clear" data-key="clear">
+                    <i class="fas fa-times"></i>
+                </button>
+                <button class="key-btn" data-key="0">0</button>
+                <button class="key-btn key-delete" data-key="delete">
+                    <i class="fas fa-backspace"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+     <!-- Main Dashboard -->
+    <div id="dashboard" class="dashboard hidden">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="bank-info">
+                    
+                    <div class="bankowner">
+                        <h2 class="bank-name">網路銀行</h2>
+                        
+                   <!-- Edit -->        
+                        <p class="account-owner">Mr Lee</p>
+                                             
+                    </div>
+                </div>
+                <button class="logout-btn" id="logoutBtn" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Balance Card -->
+            <div class="balance-card">
+                <p class="balance-label">可用餘額</p>
+             <br>
+                   <br>
+               <!-- Edit -->  
+                <h1 class="balance-amount">NT$ 4,000,000</h1>
+               <div>
+                   <br>
+                   <br>
+             <a href="transfer.html">
+    <button class="transfer">傳遞</button>
+</a>
+                   
+               </div>            
+               </div>   
+
+            <!-- Progress Section -->
+            <div class="progress-section">
+                <div class="progress-header">
+                    <h3>挽救目標的進展</h3>
+                    
+                 <!-- Edit -->   
+                    <span class="progress-percentage">50%</span>
+                    
+                </div>
+                <div class="progress-bar-container">
+                    
+        <!-- Edit -->            
+                    <div class="progress-bar" style="width: 50%"></div>
+                    
+                </div>
+                <div class="progress-info">
+                    
+                     <!-- Edit -->  
+                    <span>NT$50,000 的 NT$ 4,000,000</span>
+                 
+                    <span class="progress-goal">目標：緊急基金</span>
+                </div>
+            </div>
+            
+        </body>
+        <script src="appt.js"></script>
+        </html>

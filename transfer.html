@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taiwan - Online Banking</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<style>
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: white;
+    min-height: 100vh;
+    overflow-x: hidden;
+}  
+
+.dashboard-header {
+    background: linear-gradient(
+  135deg,
+  #0b6f63 0%,
+  #0f7f6f 50%,
+  #1a8f7a 100%
+);
+    color: white;
+    padding: 20px 20px 30px;
+    border-radius: 0 0 0px 0px;
+    min-height: 10vh;
+}
+
+/* MAIN FORM */
+.transfer-container {
+    padding: 20px;
+}
+
+label {
+    display: block;
+    margin: 15px 0 5px;
+    color: #0b7a6b;
+    font-weight: 600;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid #cfdedb;
+    outline: none;
+    font-size: 16px;
+}
+
+input:focus {
+    border-color: #0b7a6b;
+}
+
+.next-btn {
+    width: 100%;
+    margin-top: 25px;
+    padding: 15px;
+    background: #0b7a6b;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.next-btn:active {
+    opacity: 0.9;
+}
+
+/* POPUP */
+.popup-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-box {
+    background: #ffffff;
+    width: 85%;
+    max-width: 320px;
+    padding: 20px;
+    border-radius: 14px;
+    text-align: center;
+    border-top: 6px solid #0b7a6b;
+}
+
+.popup-box h3 {
+    margin-bottom: 10px;
+    color: #0b7a6b;
+}
+
+.popup-box p {
+    color: #333;
+    font-size: 15px;
+}
+
+.popup-btn {
+    margin-top: 20px;
+    padding: 12px;
+    width: 100%;
+    background: #0b7a6b;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.next-btn:disabled {
+    background: #a9cfc9;
+    cursor: not-allowed;
+}
+</style>
+<body>
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="bank-info">
+                    
+                    <div class="bankowner">
+                        <h2 class="bank-name">網路銀行</h2>
+                  
+                                             
+                    </div>
+                </div>
+                 <button class="logout-btn" id="logoutBtn" title="Go Back">
+    <i class="fas fa-arrow-left"></i>
+</button>
+            </div>
+        </header>
+        </div>
+       <div class="transfer-container">
+    <label>帳號</label>
+    <input type="number" placeholder="請輸入您的帳號" id="accountNumber">
+
+    <label>帳戶名稱</label>
+    <input type="text" placeholder="請輸入您的賬戶名" id="accountName">
+
+   <button class="next-btn" onclick="openPopup()">下一個</button> 
+</div>
+        
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popup">
+    <div class="popup-box">
+        <h3>⚠通知</h3>
+        <p>請先完成付款，然後再進行轉賬</p>
+<button class="next-btn" id="nextBtn" onclick="openPopup()" disabled>知道了</button>
+
+    </div>
+</div>
+
+<script>
+const accountNumber = document.getElementById('accountNumber');
+const accountName = document.getElementById('accountName');
+const nextBtn = document.getElementById('nextBtn');
+
+function checkInputs() {
+    if (
+        accountNumber.value.trim() !== "" &&
+        accountName.value.trim() !== ""
+    ) {
+        nextBtn.disabled = false;
+    } else {
+        nextBtn.disabled = true;
+    }
+}
+
+accountNumber.addEventListener('input', checkInputs);
+accountName.addEventListener('input', checkInputs);
+
+function openPopup() {
+    if (nextBtn.disabled) return; // extra safety
+    document.getElementById('popup').style.display = 'flex';
+}
+
+function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+}
+
+popup.addEventListener('click', (e) => {
+    if (e.target === popup) {
+        popup.style.display = 'none';
+    }
+});
+</script>
+            <script>
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        window.history.back();
+    });
+</script>
+</body>
+</html>
