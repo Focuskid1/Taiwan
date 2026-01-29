@@ -3,195 +3,651 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taiwan - Online Banking</title>
-  <link rel="stylesheet" href="style.css">
+    <title>Taiwan Online Banking - Fund Transfer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <style>
-  body {
+body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: white;
+    background: #f8fafb;
     min-height: 100vh;
     overflow-x: hidden;
-}  
-
-.dashboard-header {
-    background: linear-gradient(
-  135deg,
-  #0b6f63 0%,
-  #0f7f6f 50%,
-  #1a8f7a 100%
-);
-    color: white;
-    padding: 20px 20px 30px;
-    border-radius: 0 0 0px 0px;
-    min-height: 10vh;
+    margin: 0;
+    padding: 0;
 }
 
-/* MAIN FORM */
-.transfer-container {
+.dashboard-header {
+    background: linear-gradient(135deg, #0b6f63 0%, #0f7f6f 50%, #1a8f7a 100%);
+    color: white;
     padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.bank-name {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.logout-btn {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.logout-btn:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.main-container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+.transfer-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid #e1e8ed;
+}
+
+.card-title {
+    color: #0b6f63;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
 }
 
 label {
     display: block;
-    margin: 15px 0 5px;
-    color: #0b7a6b;
-    font-weight: 600;
+    margin-bottom: 8px;
+    color: #2c3e50;
+    font-weight: 500;
+    font-size: 14px;
 }
 
 input {
     width: 100%;
-    padding: 14px;
+    padding: 14px 16px;
     border-radius: 8px;
-    border: 1px solid #cfdedb;
+    border: 1px solid #d1d9e0;
     outline: none;
     font-size: 16px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 input:focus {
-    border-color: #0b7a6b;
+    border-color: #0b6f63;
+    box-shadow: 0 0 0 3px rgba(11, 111, 99, 0.1);
 }
 
-.next-btn {
+input:invalid {
+    border-color: #e74c3c;
+}
+
+.amount-input {
+    position: relative;
+}
+
+.currency-symbol {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #7f8c8d;
+    font-weight: 500;
+}
+
+.amount-input input {
+    padding-left: 45px;
+}
+
+.transfer-btn {
     width: 100%;
-    margin-top: 25px;
-    padding: 15px;
-    background: #0b7a6b;
+    padding: 16px;
+    background: linear-gradient(135deg, #0b6f63, #1a8f7a);
     color: white;
     border: none;
     border-radius: 10px;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 600;
     cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
-.next-btn:active {
-    opacity: 0.9;
+.transfer-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(11, 111, 99, 0.3);
 }
 
-/* POPUP */
+.transfer-btn:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.transfer-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+/* Transfer History Section */
+.history-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid #e1e8ed;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.history-title {
+    color: #0b6f63;
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.clear-btn {
+    background: none;
+    border: 1px solid #e1e8ed;
+    color: #7f8c8d;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.clear-btn:hover {
+    border-color: #0b6f63;
+    color: #0b6f63;
+}
+
+.history-list {
+    min-height: 150px;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid #f1f3f4;
+    animation: slideIn 0.3s ease-out;
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.transfer-details {
+    flex: 1;
+}
+
+.transfer-recipient {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 4px;
+}
+
+.transfer-account {
+    font-size: 14px;
+    color: #7f8c8d;
+    font-family: 'Monaco', 'Menlo', monospace;
+}
+
+.transfer-amount {
+    font-weight: 600;
+    color: #27ae60;
+    font-size: 16px;
+}
+
+.transfer-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.status-pending {
+    color: #f39c12;
+    animation: pulse 1.5s ease-in-out infinite alternate;
+}
+
+.status-completed {
+    color: #27ae60;
+}
+
+.status-failed {
+    color: #e74c3c;
+}
+
+.empty-history {
+    text-align: center;
+    color: #7f8c8d;
+    font-style: italic;
+    padding: 40px 20px;
+}
+
 .popup-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.5);
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 }
 
 .popup-box {
-    background: #ffffff;
-    width: 85%;
-    max-width: 320px;
-    padding: 20px;
-    border-radius: 14px;
+    background: white;
+    width: 90%;
+    max-width: 400px;
+    padding: 30px;
+    border-radius: 12px;
     text-align: center;
-    border-top: 6px solid #0b7a6b;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    animation: popupSlide 0.3s ease-out;
 }
 
 .popup-box h3 {
-    margin-bottom: 10px;
-    color: #0b7a6b;
+    margin-bottom: 15px;
+    color: #0b6f63;
+    font-size: 20px;
 }
 
 .popup-box p {
-    color: #333;
-    font-size: 15px;
+    color: #555;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 25px;
 }
 
 .popup-btn {
-    margin-top: 20px;
-    padding: 12px;
-    width: 100%;
-    background: #0b7a6b;
+    padding: 14px 30px;
+    background: #0b6f63;
     color: white;
     border: none;
-    border-radius: 10px;
-    font-weight: bold;
+    border-radius: 8px;
+    font-weight: 600;
     cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
 }
-.next-btn:disabled {
-    background: #a9cfc9;
-    cursor: not-allowed;
+
+.popup-btn:hover {
+    background: #0a5d53;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    from { opacity: 1; }
+    to { opacity: 0.5; }
+}
+
+@keyframes popupSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        padding: 0 15px;
+        margin: 20px auto;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .transfer-card, .history-card {
+        padding: 20px;
+    }
+    
+    .history-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .transfer-amount {
+        align-self: flex-end;
+    }
 }
 </style>
 <body>
-        <!-- Header -->
-        <header class="dashboard-header">
-            <div class="header-content">
-                <div class="bank-info">
-                    
-                    <div class="bankowner">
-                        <h2 class="bank-name">網路銀行</h2>
-                  
-                                             
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="bank-info">
+                <h2 class="bank-name">
+                    <i class="fas fa-university"></i>
+                    台灣網上銀行
+                </h2>
+            </div>
+            <button class="logout-btn" id="logoutBtn" title="返回">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Transfer Form -->
+        <div class="transfer-card">
+            <h3 class="card-title">
+                <i class="fas fa-exchange-alt"></i>
+                資金轉帳
+            </h3>
+            
+            <form id="transferForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="accountNumber">帳號 *</label>
+                        <input type="text" 
+                               id="accountNumber" 
+                               placeholder="請輸入帳號" 
+                               pattern="[0-9-]+"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label for="accountName">用戶名 *</label>
+                        <input type="text" 
+                               id="accountName" 
+                               placeholder="請輸入姓名"
+                               required>
                     </div>
                 </div>
-                 <button class="logout-btn" id="logoutBtn" title="Go Back">
-    <i class="fas fa-arrow-left"></i>
-</button>
-            </div>
-        </header>
+
+                <div class="form-group">
+                    <label for="transferAmount">轉帳金額 (TWD) *</label>
+                    <div class="amount-input">
+                        <span class="currency-symbol">$</span>
+                        <input type="number" 
+                               id="transferAmount" 
+                               placeholder="0.00" 
+                               min="1" 
+                               step="0.01"
+                               required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="transferNote">備註 (選填)</label>
+                    <input type="text" 
+                           id="transferNote" 
+                           placeholder="轉帳用途或備註">
+                </div>
+
+                <button type="submit" class="transfer-btn" id="transferBtn" disabled>
+                    <i class="fas fa-paper-plane"></i>
+                    確認轉帳
+                </button>
+            </form>
         </div>
-       <div class="transfer-container">
-    <label>帳號</label>
-    <input type="number" placeholder="請輸入您的帳號" id="accountNumber">
 
-    <label>帳戶名稱</label>
-    <input type="text" placeholder="請輸入您的賬戶名" id="accountName">
-
-   <button class="next-btn" onclick="openPopup()">下一個</button> 
-</div>
-        
-
-<!-- POPUP -->
-<div class="popup-overlay" id="popup">
-    <div class="popup-box">
-        <h3>⚠通知</h3>
-        <p>請先完成付款，然後再進行轉賬</p>
-<button class="next-btn" id="nextBtn" onclick="openPopup()" disabled>知道了</button>
-
+        <!-- Transfer History -->
+        <div class="history-card">
+            <div class="history-header">
+                <h3 class="history-title">
+                    <i class="fas fa-history"></i>
+                    轉帳記錄
+                </h3>
+                <button class="clear-btn" id="clearHistoryBtn">
+                    <i class="fas fa-trash-alt"></i>
+                    清除記錄
+                </button>
+            </div>
+            
+            <div class="history-list" id="historyList">
+                <div class="empty-history" id="emptyHistory">
+                    尚無轉帳記錄
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 
-<script>
-const accountNumber = document.getElementById('accountNumber');
-const accountName = document.getElementById('accountName');
-const nextBtn = document.getElementById('nextBtn');
+    <!-- Popup -->
+    <div class="popup-overlay" id="popup">
+        <div class="popup-box">
+            <h3>
+                <i class="fas fa-exclamation-triangle" style="color: #f39c12;"></i>
+                系統通知
+            </h3>
+            <p>待處理交易...</p>
+            <button class="popup-btn" onclick="closePopup()">我知道了</button>
+        </div>
+    </div>
 
-function checkInputs() {
-    if (
-        accountNumber.value.trim() !== "" &&
-        accountName.value.trim() !== ""
-    ) {
-        nextBtn.disabled = false;
-    } else {
-        nextBtn.disabled = true;
-    }
-}
-
-accountNumber.addEventListener('input', checkInputs);
-accountName.addEventListener('input', checkInputs);
-
-function openPopup() {
-    if (nextBtn.disabled) return; // extra safety
-    document.getElementById('popup').style.display = 'flex';
-}
-
-function closePopup() {
-    document.getElementById('popup').style.display = 'none';
-}
-
-popup.addEventListener('click', (e) => {
-    if (e.target === popup) {
-        popup.style.display = 'none';
-    }
-});
-</script>
-            <script>
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-        window.history.back();
-    });
-</script>
+   <script>  
+        const accountNumber = document.getElementById('accountNumber');  
+        const accountName = document.getElementById('accountName');  
+        const transferAmount = document.getElementById('transferAmount');  
+        const transferNote = document.getElementById('transferNote');  
+        const transferBtn = document.getElementById('transferBtn');  
+        const transferForm = document.getElementById('transferForm');  
+        const historyList = document.getElementById('historyList');  
+        const emptyHistory = document.getElementById('emptyHistory');  
+        const clearHistoryBtn = document.getElementById('clearHistoryBtn');  
+        const popup = document.getElementById('popup');  
+  
+        let transferHistory = JSON.parse(localStorage.getItem('transferHistory')) || [];  
+        let transferCounter = 1;  
+  
+        // Load existing history on page load  
+        displayHistory();  
+  
+        function validateInputs() {  
+            const isValid =   
+                accountNumber.value.trim() !== "" &&  
+                accountName.value.trim() !== "" &&  
+                transferAmount.value.trim() !== "" &&  
+                parseFloat(transferAmount.value) > 0;  
+              
+            transferBtn.disabled = !isValid;  
+        }  
+  
+        // Add event listeners for validation  
+        [accountNumber, accountName, transferAmount].forEach(input => {  
+            input.addEventListener('input', validateInputs);  
+        });  
+  
+        // Format account number input  
+        accountNumber.addEventListener('input', function(e) {  
+            let value = e.target.value.replace(/\D/g, '');  
+            if (value.length > 3) {  
+                value = value.replace(/(\d{3})(\d{3})(\d{7})/, '$1-$2-$3');  
+            }  
+            e.target.value = value;  
+        });  
+  
+        // Format amount input  
+        transferAmount.addEventListener('input', function(e) {  
+            if (e.target.value < 0) {  
+                e.target.value = '';  
+            }  
+        });  
+  
+        // Handle form submission  
+        transferForm.addEventListener('submit', function(e) {  
+            e.preventDefault();  
+              
+            if (transferBtn.disabled) return;  
+  
+            const transferData = {  
+                id: Date.now(),  
+                recipient: accountName.value.trim(),  
+                account: accountNumber.value.trim(),  
+                amount: parseFloat(transferAmount.value),  
+                note: transferNote.value.trim() || '',                   
+                status: 'pending'  
+            };  
+  
+            // Add to history  
+            transferHistory.unshift(transferData);  
+            localStorage.setItem('transferHistory', JSON.stringify(transferHistory));  
+              
+            // Display updated history  
+            displayHistory();  
+  
+            // Show popup  
+            openPopup();  
+  
+            // Simulate processing (in real banking, this would be server-side)  
+            setTimeout(() => {  
+                updateTransferStatus(transferData.id, Math.random() > 0.1 ? 'completed' : 'failed');  
+            }, 3000 + Math.random() * 2000);  
+  
+            // Reset form  
+            transferForm.reset();  
+            validateInputs();  
+        });  
+  
+        function displayHistory() {  
+            if (transferHistory.length === 0) {  
+                historyList.innerHTML = '<div class="empty-history">尚無轉帳記錄</div>';  
+                return;  
+            }  
+  
+            const historyHTML = transferHistory.map(transfer => {  
+                const statusClass = `status-${transfer.status}`;  
+                const statusText = {  
+                    pending: '處理中...',  
+                    completed: '處理中...',  
+                    failed: '處理中...'  
+                }[transfer.status];  
+  
+                const statusIcon = {  
+                    pending: 'fas fa-spinner fa-spin',  
+                    completed: 'fas fa-spinner fa-spin',  
+                    failed: 'fas fa-spinner fa-spin'  
+                }[transfer.status];  
+  
+                return `  
+                    <div class="history-item" data-id="${transfer.id}">  
+                        <div class="transfer-details">  
+                            <div class="transfer-recipient">${transfer.recipient}</div>  
+                            <div class="transfer-account">${transfer.account}</div>  
+                            <div style="font-size: 12px; color: #95a5a6; margin-top: 4px;">  
+                                ${transfer.note ? transfer.note : ''} 
+                            </div>  
+                        </div>  
+                        <div style="text-align: right;">  
+                            <div class="transfer-amount">$${transfer.amount.toLocaleString('zh-TW', {minimumFractionDigits: 2})}</div>  
+                            <div class="transfer-status ${statusClass}">  
+                                <i class="${statusIcon}"></i>  
+                                ${statusText}  
+                            </div>  
+                        </div>  
+                    </div>  
+                `;  
+            }).join('');  
+  
+            historyList.innerHTML = historyHTML;  
+        }  
+  
+        function updateTransferStatus(transferId, newStatus) {  
+            const transferIndex = transferHistory.findIndex(t => t.id === transferId);  
+            if (transferIndex !== -1) {  
+                transferHistory[transferIndex].status = newStatus;  
+                localStorage.setItem('transferHistory', JSON.stringify(transferHistory));  
+                displayHistory();  
+            }  
+        }  
+  
+        // Clear history  
+        clearHistoryBtn.addEventListener('click', function() {  
+            if (confirm('確定要清除所有轉帳記錄嗎？')) {  
+                transferHistory = [];  
+                localStorage.removeItem('transferHistory');  
+                displayHistory();  
+            }  
+        });  
+  
+        // Popup functions  
+        function openPopup() {  
+            popup.style.display = 'flex';  
+        }  
+  
+        function closePopup() {  
+            popup.style.display = 'none';  
+        }  
+  
+        // Close popup when clicking outside  
+        popup.addEventListener('click', function(e) {  
+            if (e.target === popup) {  
+                closePopup();  
+            }  
+        });  
+  
+        // Back button  
+        document.getElementById('logoutBtn').addEventListener('click', function() {  
+            if (confirm('確定要離開此頁面嗎？')) {  
+                window.history.back();  
+            }  
+        });  
+    </script>
 </body>
-</html>
+    </html>
+    
